@@ -4,12 +4,10 @@ pipeline {
 	stages {
 		stage('Docker') {
 			steps {
-				dir('docker') {
-					script {
-						image = docker.build("docker.ehm.rocks/ehm/${IMAGE_NAME}")
-						docker.withRegistry("https://docker.ehm.rocks","docker.ehm.rocks-write")  {
-							image.push("${BRANCH_NAME}")
-						}
+				script {
+					image = docker.build("docker.ehm.rocks/ehm/${IMAGE_NAME}")
+					docker.withRegistry("https://docker.ehm.rocks","docker.ehm.rocks-write")  {
+						image.push("${BRANCH_NAME}")
 					}
 				}
 			}
