@@ -13,6 +13,11 @@ def main():
     has_users=False
     if 'USERS' in environ:
         for user_pass in environ['USERS'].split():
+            if not user_pass:
+                continue
+            if ':' not in user_pass:
+                print "WARNING: Entry not in format 'user:pass': %s" % user_pass
+                continue
             (u,p)=user_pass.split(':',1)
             if not p.startswith('$2y$'):
                 print "WARNING: For security reasons, only bcrypt passwords are accepted (starting with $2y$) - skipping user %s" % u
