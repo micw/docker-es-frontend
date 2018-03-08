@@ -3,7 +3,7 @@ FROM alpine:3.7
 RUN apk --no-cache add bash python nginx curl apache2-utils
 
 RUN mkdir -p /var/www/es-head && \
-    curl -L -s https://github.com/micw/elasticsearch-head/archive/master.tar.gz | \
+    curl -L -s https://github.com/mobz/elasticsearch-head/archive/master.tar.gz | \
       tar xfvz - -C /var/www/es-head --strip-components=2 'elasticsearch-head-master/_site' && \
     mkdir -p /var/www/es-kopf && \
     curl -L -s https://github.com/micw/elasticsearch-kopf/releases/download/v6.0.1/site.tgz | \
