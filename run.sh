@@ -13,7 +13,6 @@ if [ -z "${NAMESERVER_IP}" ]; then
 fi
 
 /update_config.py /etc/nginx/nginx.conf
-
-htpasswd -bc /etc/nginx/htpasswd "${AUTH_USER:-admin}" "${AUTH_PASS:-password}"
+/generate_htpasswd.py /etc/nginx/htpasswd
 
 nginx -g "daemon off;"

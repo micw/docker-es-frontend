@@ -6,13 +6,16 @@ RUN mkdir -p /var/www/es-head && \
     curl -L -s https://github.com/micw/elasticsearch-head/archive/master.tar.gz | \
       tar xfvz - -C /var/www/es-head --strip-components=2 'elasticsearch-head-master/_site' && \
     mkdir -p /var/www/es-kopf && \
-    curl -L -s https://github.com/micw/elasticsearch-kopf/archive/5.x.tar.gz | \
-      tar xfvz - -C /var/www/es-kopf --strip-components=2 'elasticsearch-kopf-5.x/_site'
+    curl -L -s https://github.com/micw/elasticsearch-kopf/releases/download/v6.0.1/site.tgz | \
+      tar xfvz - -C /var/www/es-kopf
 
 ADD run.sh /run.sh
 ADD update_config.py /update_config.py
-RUN chmod 755 /run.sh /update_config.py
+ADD generate_htpasswd.py /generate_htpasswd.py
 
 ADD nginx.conf /etc/nginx/nginx.conf
+
+# admin:password - use http://aspirine.org/htpasswd_en.html to generate more
+ENV USERS='admin:$2y$11$cShofGClacp9BQZOuEGFWunqYyo00l7ftDUR2as1oP7Af85YU9vzK'
 
 CMD ["/run.sh"]
